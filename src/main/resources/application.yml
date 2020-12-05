@@ -1,0 +1,11 @@
+server:
+  port: 9292
+
+queue:
+  user: "user_queue"
+
+exchange:
+  user: "user_exchange"
+
+routing_key:
+  user: "user_routingkey"
