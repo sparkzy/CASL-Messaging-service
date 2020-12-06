@@ -1,6 +1,10 @@
 package gg.sparkzy.casl.messagingservice.dto;
 
-public class Message<T> {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Message<T> implements Serializable {
 
 	private T object;
 	private String status;
@@ -11,7 +15,9 @@ public class Message<T> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Message(T object, String status, String message) {
+	public Message(@JsonProperty("object") T object,
+				   @JsonProperty("status") String status,
+				   @JsonProperty("message") String message) {
 		super();
 		this.object = object;
 		this.status = status;
@@ -65,7 +71,8 @@ public class Message<T> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Message other = (Message) obj;
+		@SuppressWarnings("unchecked")
+		Message<T> other = (Message<T>) obj;
 		if (message == null) {
 			if (other.message != null)
 				return false;

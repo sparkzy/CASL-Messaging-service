@@ -23,10 +23,10 @@ public class UserProducer {
 
 	@PostMapping
 	public String userRequest(@RequestBody User user) {
-//		UserStatus userStatus = new UserStatus(user, "Processing", "Requesting a user");
 		Message<User> userMessage = new Message<User>(user, "Processing", "Requesting a user");
 		template.convertAndSend(config.USER_EXCHANGE, config.USER_ROUTINGKEY, userMessage);
-		return " [x] Producing user request for user: " + user;
+		System.out.println(" [x] Producing message: " + userMessage);
+		return " [x] Producing user request for: " + user;
 	}
 
 }
