@@ -5,9 +5,9 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,22 +30,22 @@ public class MessagingConfig {
 	}
 	
 	@Bean
-	public TopicExchange exchange() {
+	public TopicExchange userExchange() {
 		return new TopicExchange(USER_EXCHANGE);
 	}
 	
 	@Bean
-	public Binding binding(Queue queue, TopicExchange exchange) {
+	public Binding userBinding(Queue queue, TopicExchange exchange) {
 		return BindingBuilder.bind(queue).to(exchange).with(USER_ROUTINGKEY);
 	}
 	
 	@Bean
-	public MessageConverter converter() {
+	public Jackson2JsonMessageConverter converter() {
 		return new Jackson2JsonMessageConverter();
 	}
 	
 	@Bean
-	public AmqpTemplate template(org.springframework.amqp.rabbit.connection.ConnectionFactory connFactory) {
+	public AmqpTemplate template(ConnectionFactory connFactory) {
 		final RabbitTemplate rabbitTemplate = new RabbitTemplate(connFactory);
 		rabbitTemplate.setMessageConverter(converter());
 		return rabbitTemplate;
