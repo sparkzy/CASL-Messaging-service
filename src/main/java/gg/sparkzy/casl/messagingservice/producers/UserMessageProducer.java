@@ -13,7 +13,7 @@ import gg.sparkzy.casl.messagingservice.dto.User;
 
 @RestController
 @RequestMapping("/user")
-public class UserProducer {
+public class UserMessageProducer {
 
 	@Autowired
 	private RabbitTemplate template;
